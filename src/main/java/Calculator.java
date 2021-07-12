@@ -49,7 +49,6 @@ public class Calculator {
             number = Double.parseDouble(in.toString());
         } catch (NumberFormatException e) {
             System.out.println("Parsing exception. " + e.getMessage());
-//            Runtime.getRuntime().exit(1);
             return null;
         }
         return number;
