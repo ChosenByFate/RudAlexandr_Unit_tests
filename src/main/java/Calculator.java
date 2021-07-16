@@ -2,13 +2,12 @@ import java.util.Scanner;
 
 public class Calculator {
     // Operation, first number, second number are separated by a space.
-    public static void main(String[] args) throws ZeroDivideException {
+    public static void main(String[] args) throws ZeroDivideException, IncorrectArgsCount, IncorrectOperator {
         String operation;
         Object number1, number2;
         if (args.length != 0) {
             if (args.length != 3) {
-                System.out.println("There should be 3 arguments: operation, first number, second number.");
-                return;
+                throw new IncorrectArgsCount("There should be 3 arguments: operation, first number, second number.");
             }
             operation = args[0];
             number1 = args[1];
@@ -38,61 +37,52 @@ public class Calculator {
                 div(number1, number2);
                 break;
             default:
-                System.out.println("Operation wasn't recognized." +
+                throw new IncorrectOperator("Operation \"" + operation + "\" wasn't recognized." +
                         "\nYou need to use: \"+\", \"-\", \"*\", \"/\"");
         }
     }
 
-    private static Object parse(Object in) {
+    private static double parse(Object in) {
         double number;
         try {
             number = Double.parseDouble(in.toString());
         } catch (NumberFormatException e) {
-            System.out.println("Parsing exception. " + e.getMessage());
-            return null;
+            throw new NumberFormatException("Parsing exception. " + e.getMessage());
         }
         return number;
     }
 
     public static double add(Object in1, Object in2) {
-        Object number1 = parse(in1),
+        double number1 = parse(in1),
                 number2 = parse(in2);
-        if (number1 == null || number2 == null)
-            return 0;
-        double result = (double)number1 + (double)number2;
+        double result = number1 + number2;
         System.out.println(number1 + " + " + number2 + " = " + result);
         return result;
     }
 
     public static double sub(Object in1, Object in2) {
-        Object number1 = parse(in1),
+        double number1 = parse(in1),
                 number2 = parse(in2);
-        if (number1 == null || number2 == null)
-            return 0;
-        double result = (double)number1 - (double)number2;
+        double result = number1 - number2;
         System.out.println(number1 + " - " + number2 + " = " + result);
         return result;
     }
 
     public static double mul(Object in1, Object in2) {
-        Object number1 = parse(in1),
+        double number1 = parse(in1),
                 number2 = parse(in2);
-        if (number1 == null || number2 == null)
-            return 0;
-        double result = (double)number1 * (double)number2;
+        double result = number1 * number2;
         System.out.println(number1 + " * " + number2 + " = " + result);
         return result;
     }
 
     public static double div(Object in1, Object in2) throws ZeroDivideException {
-        Object number1 = parse(in1),
+        double number1 = parse(in1),
                 number2 = parse(in2);
-        if (number1 == null || number2 == null)
-            return 0;
-        if ((double)number2 == 0.d) {
+        if (number2 == 0.d) {
             throw new ZeroDivideException("Zero divide exception.");
         }
-        double result = (double)number1 / (double)number2;
+        double result = number1 / number2;
         System.out.println(number1 + " / " + number2 + " = " + result);
         return result;
     }

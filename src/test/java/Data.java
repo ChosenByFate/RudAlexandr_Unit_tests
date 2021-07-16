@@ -47,19 +47,33 @@ public class Data {
     @DataProvider
     public static Object[][] testDivByZero() {
         return new Object[][] {
-                {Double.POSITIVE_INFINITY, 11, 0},
-                {Double.NEGATIVE_INFINITY, -11, 0},
+                {11, 0},
+                {-11, 0},
+        };
+    }
+
+    @DataProvider
+    public static Object[][] testIncorrectArgsCount() {
+        return new Object[][] {
+                {"*", "str", "str", "str"},
+                {"*", "7"},
+                {"+"}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] testIncorrectOperator() {
+        return new Object[][] {
+                {"str", 11, 0}
         };
     }
 
     @DataProvider
     public static Object[][] testIncorrectValues() {
         return new Object[][] {
-                {"str", 11, 0},
                 {"/", "*", 10},
-                {"*", "str", "str"},
-                {"*", "str", "str", "str"},
-                {"str"}
+                {"/", 11, "*"},
+                {"*", "str", "str"}
         };
     }
 }
